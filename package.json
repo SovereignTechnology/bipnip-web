@@ -7,6 +7,7 @@
     "dev": "node --max-old-space-size=4096 ./node_modules/.bin/webpack --watch --progress --mode development",
     "test": "jest",
     "build": "webpack --config webpack.config.ts --mode production",
+    "build:bipnip": "webpack --config webpack.bipnip.config.ts --mode production",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix 'src/**/*.{ts,tsx}'",

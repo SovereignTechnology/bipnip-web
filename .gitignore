@@ -1,0 +1,14 @@
+# bipnip-web build outputs and dependencies (RoboSats' root .gitignore, frontend lines, re-rooted)
+node_modules/
+dist/
+coverage/
+static/frontend
+static/assets/avatars*
+static/locales/collected_phrases.json
+src/components/PaymentMethods/Icons/code*
+src/components/PaymentMethods/Icons/webp*
+templates/frontend/*.html
+/*.html
+# Never commit robot tokens, keys or settings with secrets.
+*.nsec
+.env
