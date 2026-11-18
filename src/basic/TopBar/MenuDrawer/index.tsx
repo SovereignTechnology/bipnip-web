@@ -22,6 +22,7 @@ import {
   PriceChange,
   School,
   SettingsApplications,
+  Bolt,
 } from '@mui/icons-material';
 import { TorIcon, RoboSatsTextIcon } from '../../../components/Icons';
 import RobotAvatar from '../../../components/RobotAvatar';
@@ -180,6 +181,14 @@ const MenuDrawer = ({ show, setShow }: MenuDrawerProps): React.JSX.Element => {
                 <BubbleChart />
               </ListItemIcon>
               <ListItemText primary={t('Client info')} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => changePage('liquidity')}>
+              <ListItemIcon sx={{ minWidth: 56 }}>
+                <Bolt />
+              </ListItemIcon>
+              <ListItemText primary={t('Liquidity')} />
             </ListItemButton>
           </ListItem>
           <div style={{ flexGrow: 1 }} />

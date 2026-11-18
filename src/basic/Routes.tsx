@@ -4,7 +4,15 @@ import { Fade } from '@mui/material';
 import { type UseAppStoreType, AppContext, Page } from '../contexts/AppContext';
 import useLegacyMode from '../hooks/useLegacyMode';
 
-import { RobotPage, GaragePage, MakerPage, BookPage, OrderPage, SettingsPage } from '.';
+import {
+  RobotPage,
+  GaragePage,
+  MakerPage,
+  BookPage,
+  OrderPage,
+  SettingsPage,
+  LiquidityPage,
+} from '.';
 import { GarageContext, type UseGarageStoreType } from '../contexts/GarageContext';
 
 const Routes: React.FC = () => {
@@ -93,6 +101,17 @@ const Routes: React.FC = () => {
           <Fade in={page === 'order'} appear>
             <div>
               <OrderPage />
+            </div>
+          </Fade>
+        }
+      />
+
+      <Route
+        path='/liquidity'
+        element={
+          <Fade in={page === 'liquidity'} appear>
+            <div>
+              <LiquidityPage />
             </div>
           </Fade>
         }
