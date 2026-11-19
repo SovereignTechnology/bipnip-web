@@ -80,7 +80,12 @@ const RunsTab = ({ canTrade }: Props): React.JSX.Element => {
         <>
           <Typography variant='h6'>{t('Waiting for your approval')}</Typography>
           {parked.map((request) => (
-            <Card key={request.approval} variant='outlined' sx={{ my: 1 }} className='bipnip-parked'>
+            <Card
+              key={request.approval}
+              variant='outlined'
+              sx={{ my: 1 }}
+              className='bipnip-parked'
+            >
               <CardContent>
                 <Typography variant='body2'>
                   {request.method} · {t('fee up to')} {sats(request.ask.fee_sat)} ·{' '}
@@ -118,12 +123,12 @@ const RunsTab = ({ canTrade }: Props): React.JSX.Element => {
               {run.halted !== undefined && <Chip size='small' color='error' label={t('halted')} />}
             </Box>
             {run.channel !== undefined && run.channel !== null && (
-              <Typography variant='caption' display='block'>
+              <Typography variant='caption' sx={{ display: 'block' }}>
                 {t('channel')} {run.channel}
               </Typography>
             )}
             {run.terms?.ends_at_height !== undefined && run.terms.ends_at_height !== null && (
-              <Typography variant='caption' display='block'>
+              <Typography variant='caption' sx={{ display: 'block' }}>
                 {t('ends at block')} {run.terms.ends_at_height}
               </Typography>
             )}

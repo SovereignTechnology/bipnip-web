@@ -36,9 +36,18 @@ describe('Liquidity numbers', () => {
 
   it('says rules and records in words, and never folds a record into a ratio', () => {
     expect(rules(undefined)).toBe('');
-    expect(rules({ min_channels: 5, min_capacity_sat: 2_000_000 })).toBe('≥ 5 channels, ≥ 2 000 000 sat');
+    expect(rules({ min_channels: 5, min_capacity_sat: 2_000_000 })).toBe(
+      '≥ 5 channels, ≥ 2 000 000 sat',
+    );
     const empty = {
-      kept: 0, opened: 0, missing: 0, closed_early: 0, disputed: 0, unpaid: 0, counterparties: 0, subjects: 0,
+      kept: 0,
+      opened: 0,
+      missing: 0,
+      closed_early: 0,
+      disputed: 0,
+      unpaid: 0,
+      counterparties: 0,
+      subjects: 0,
     };
     expect(record(undefined)).toBe('-');
     expect(record(empty)).toBe('new');
@@ -58,12 +67,24 @@ describe('Liquidity numbers', () => {
 
   it('keeps runs by name as the watch tells their changes', () => {
     const first: Run = {
-      run: 'buyer-0a', role: 'buyer', state: 'taking', finished: false, watching: false, mine: true,
+      run: 'buyer-0a',
+      role: 'buyer',
+      state: 'taking',
+      finished: false,
+      watching: false,
+      mine: true,
     };
     let runs: Record<string, Run> = { [first.run]: first };
     runs = mergeRun(runs, { status: 'watching' });
     expect(runs).toEqual({ [first.run]: first });
-    runs = mergeRun(runs, { status: 'run', run: 'buyer-0a', role: 'buyer', state: 'active', finished: false, watching: true });
+    runs = mergeRun(runs, {
+      status: 'run',
+      run: 'buyer-0a',
+      role: 'buyer',
+      state: 'active',
+      finished: false,
+      watching: true,
+    });
     expect(runs['buyer-0a'].state).toBe('active');
     expect(runs['buyer-0a'].mine).toBe(true);
     expect(runLine({ ...runs['buyer-0a'], terms: { capacity_sat: 600000, fee_sat: 2500 } })).toBe(

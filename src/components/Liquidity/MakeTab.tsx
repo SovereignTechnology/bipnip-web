@@ -35,7 +35,12 @@ const LEASE_FIELDS: Field[] = [
   { key: 'feerate_sat_vb', label: 'Funding fee rate, sat/vB', initial: '2', required: true },
   { key: 'upfront_percent', label: 'Paid upfront, %', initial: '100', required: true },
   { key: 'bond_sat', label: 'Buyer bond, sat', initial: '0', required: false },
-  { key: 'min_buyer_channels', label: 'Buyer has at least, channels', initial: '', required: false },
+  {
+    key: 'min_buyer_channels',
+    label: 'Buyer has at least, channels',
+    initial: '',
+    required: false,
+  },
   { key: 'min_buyer_capacity_sat', label: 'Buyer has at least, sat', initial: '', required: false },
 ];
 

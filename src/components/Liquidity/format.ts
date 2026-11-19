@@ -61,7 +61,10 @@ export function record(value: NodeRecord | undefined): string {
 }
 
 /** A lease's whole fee at `capacity`, as the agent computes it: base + capacity × ppm / 10⁶. */
-export function leaseFee(order: Pick<LeaseOrder, 'fee_base_sat' | 'fee_ppm'>, capacity: number): number {
+export function leaseFee(
+  order: Pick<LeaseOrder, 'fee_base_sat' | 'fee_ppm'>,
+  capacity: number,
+): number {
   return order.fee_base_sat + Math.floor((capacity * order.fee_ppm) / 1_000_000);
 }
 
@@ -86,11 +89,11 @@ export function wholeNumber(text: string): number | undefined {
 /** What a run is, in a line: role, state and its main numbers. */
 export function runLine(run: Run): string {
   const terms = run.terms;
-  const capacity =
-    terms?.capacity_sat ?? run.offered?.max_capacity_sat ?? undefined;
+  const capacity = terms?.capacity_sat ?? run.offered?.max_capacity_sat ?? undefined;
   const parts = [run.role, run.state];
   if (capacity !== undefined) parts.push(`${sats(capacity)} sat`);
-  if (terms?.fee_sat !== undefined && terms.fee_sat !== null) parts.push(`fee ${sats(terms.fee_sat)}`);
+  if (terms?.fee_sat !== undefined && terms.fee_sat !== null)
+    parts.push(`fee ${sats(terms.fee_sat)}`);
   if (run.waiting_on) parts.push(`waiting on ${run.waiting_on}`);
   return parts.join(' · ');
 }
@@ -101,7 +104,10 @@ export function isDone(run: Run): boolean {
 }
 
 /** Runs by name, newest change last, from the lists and the watch's lines. */
-export function mergeRun(runs: Record<string, Run>, line: Record<string, unknown>): Record<string, Run> {
+export function mergeRun(
+  runs: Record<string, Run>,
+  line: Record<string, unknown>,
+): Record<string, Run> {
   if (line.status !== 'run' || typeof line.run !== 'string') {
     return runs;
   }

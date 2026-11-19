@@ -94,7 +94,8 @@ const TakeDialog = ({ order, onClose }: TakeProps): React.JSX.Element => {
         {lease !== undefined ? (
           <>
             <Typography variant='body2'>
-              {t('Seller')} {shortKey(lease.seller_node)} · {t('record')} {record(lease.seller_record)}
+              {t('Seller')} {shortKey(lease.seller_node)} · {t('record')}{' '}
+              {record(lease.seller_record)}
             </Typography>
             <TextField
               fullWidth
@@ -111,7 +112,8 @@ const TakeDialog = ({ order, onClose }: TakeProps): React.JSX.Element => {
                   fee: sats(leaseFee(lease, capacitySat)),
                   upfront: lease.upfront_percent,
                 })}
-                {lease.bond_sat > 0 && ` · ${t('bond {{bond}} sat', { bond: sats(lease.bond_sat) })}`}
+                {lease.bond_sat > 0 &&
+                  ` · ${t('bond {{bond}} sat', { bond: sats(lease.bond_sat) })}`}
               </Typography>
             )}
           </>
@@ -191,7 +193,12 @@ const BookTab = ({ canTrade, ownNode }: Props): React.JSX.Element => {
   const takeButton = (order: LiquidityOrder, label: string): React.JSX.Element => (
     <Tooltip title={canTrade ? '' : t('This page was paired to look only')}>
       <span>
-        <Button size='small' variant='outlined' disabled={!canTrade} onClick={() => setChosen(order)}>
+        <Button
+          size='small'
+          variant='outlined'
+          disabled={!canTrade}
+          onClick={() => setChosen(order)}
+        >
           {label}
         </Button>
       </span>
@@ -226,7 +233,8 @@ const BookTab = ({ canTrade, ownNode }: Props): React.JSX.Element => {
             {book.instances_silent.length > 0 &&
               `${t('Instances with nothing on the relays')} ${book.instances_silent.map(shortKey).join(', ')}. `}
             {book.relays_down.length > 0 && `${t('Relays down')} ${book.relays_down.join(', ')}. `}
-            {book.records_failed !== undefined && `${t('Records could not be read')} ${book.records_failed}`}
+            {book.records_failed !== undefined &&
+              `${t('Records could not be read')} ${book.records_failed}`}
           </Alert>
         )}
 
@@ -262,7 +270,7 @@ const BookTab = ({ canTrade, ownNode }: Props): React.JSX.Element => {
               <TableCell>
                 {shortKey(order.seller_node)}{' '}
                 {order.seller_node === ownNode && <Chip size='small' label={t('yours')} />}
-                <Typography variant='caption' display='block' className='bipnip-record'>
+                <Typography variant='caption' sx={{ display: 'block' }} className='bipnip-record'>
                   {record(order.seller_record)}
                   {order.seller_listings !== undefined && order.seller_listings > 1
                     ? ` · ${order.seller_listings} ${t('listed')}`

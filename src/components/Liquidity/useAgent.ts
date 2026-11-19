@@ -47,18 +47,21 @@ export function useAgent(): {
     });
   }, []);
 
-  const askToPair = useCallback(async (label: string): Promise<void> => {
-    const answer = await agentClient.pair(label);
-    if (!answer.ok) {
-      setView((before) => ({ ...before, phase: 'unpaired', problem: answer.error.message }));
-      return;
-    }
-    if (answer.result.paired) {
-      await refresh();
-    } else {
-      setView({ phase: 'pending', pair: answer.result });
-    }
-  }, [refresh]);
+  const askToPair = useCallback(
+    async (label: string): Promise<void> => {
+      const answer = await agentClient.pair(label);
+      if (!answer.ok) {
+        setView((before) => ({ ...before, phase: 'unpaired', problem: answer.error.message }));
+        return;
+      }
+      if (answer.result.paired) {
+        await refresh();
+      } else {
+        setView({ phase: 'pending', pair: answer.result });
+      }
+    },
+    [refresh],
+  );
 
   const disconnect = useCallback(async (): Promise<void> => {
     await agentClient.end();
