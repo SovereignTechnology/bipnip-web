@@ -134,7 +134,13 @@ export interface AgentStatus {
   version: string;
   network: string;
   identity: string;
-  node: { pubkey?: string; network?: string; block_height?: number; synced?: boolean; error?: string };
+  node: {
+    pubkey?: string;
+    network?: string;
+    block_height?: number;
+    synced?: boolean;
+    error?: string;
+  };
   instances: Array<{ pubkey: string; pow: number }>;
   instances_not_ready: string[];
   runs: { under_way: number; watching: number; halted: number; by_state: Record<string, number> };

@@ -231,7 +231,12 @@ export class AgentClient {
     run?: string,
   ): { stop: () => void; done: Promise<AgentAnswer<never>> } {
     const controller = new AbortController();
-    const done = this.call<never>('watch', run !== undefined ? { run } : {}, onLine, controller.signal);
+    const done = this.call<never>(
+      'watch',
+      run !== undefined ? { run } : {},
+      onLine,
+      controller.signal,
+    );
     return { stop: () => controller.abort(), done };
   }
 
@@ -263,4 +268,7 @@ export class AgentClient {
 }
 
 /** The page's agent client. */
-export const agentClient = new AgentClient(systemClient, async (url, init) => await fetch(url, init));
+export const agentClient = new AgentClient(
+  systemClient,
+  async (url, init) => await fetch(url, init),
+);
