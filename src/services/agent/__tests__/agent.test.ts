@@ -16,7 +16,12 @@ jest.mock('../../System', () => ({
 const AGENT = 'a'.repeat(64);
 const SECRET = new Uint8Array(32).fill(7);
 
-function memory(): { getItem: jest.Mock; setItem: jest.Mock; deleteItem: jest.Mock; data: Map<string, string> } {
+function memory(): {
+  getItem: jest.Mock;
+  setItem: jest.Mock;
+  deleteItem: jest.Mock;
+  data: Map<string, string>;
+} {
   const data = new Map<string, string>();
   return {
     data,
@@ -50,7 +55,11 @@ function answer(chunks: string[], status = 200): Fetched {
 }
 
 /** A host that answers each request with the next of `answers`, and keeps what it was sent. */
-function host(answers: Fetched[]): { fetch: FetchFn; sent: Event[]; inits: Parameters<FetchFn>[1][] } {
+function host(answers: Fetched[]): {
+  fetch: FetchFn;
+  sent: Event[];
+  inits: Parameters<FetchFn>[1][];
+} {
   const sent: Event[] = [];
   const inits: Parameters<FetchFn>[1][] = [];
   let next = 0;
@@ -121,7 +130,10 @@ describe('AgentClient', () => {
   it('sends a signed request and reads the status lines and the final answer', async () => {
     const store = memory();
     const { fetch, sent, inits } = host([
-      answer(['{"status":"started","run":"buyer-0a"}\n{"ok":tr', 'ue,"result":{"run":"buyer-0a"}}\n']),
+      answer([
+        '{"status":"started","run":"buyer-0a"}\n{"ok":tr',
+        'ue,"result":{"run":"buyer-0a"}}\n',
+      ]),
     ]);
     const client = new AgentClient(store, fetch, () => 1_800_000_000);
     const lines: unknown[] = [];
@@ -138,7 +150,9 @@ describe('AgentClient', () => {
   it('learns the agent from a pairing answer, and names it from then on', async () => {
     const store = memory();
     const { fetch, sent } = host([
-      answer([`{"ok":true,"result":{"paired":false,"pending":true,"code":"1234-5678-9012","agent":"${AGENT}"}}\n`]),
+      answer([
+        `{"ok":true,"result":{"paired":false,"pending":true,"code":"1234-5678-9012","agent":"${AGENT}"}}\n`,
+      ]),
       answer(['{"ok":true,"result":{}}\n']),
     ]);
     const client = new AgentClient(store, fetch);
@@ -166,7 +180,9 @@ describe('AgentClient', () => {
 
   it('tells a refusal, a parked request, a missing agent and a host error apart', async () => {
     const { fetch } = host([
-      answer(['{"ok":false,"error":{"code":"needs-approval","message":"parked","approval":"3f2a"}}\n']),
+      answer([
+        '{"ok":false,"error":{"code":"needs-approval","message":"parked","approval":"3f2a"}}\n',
+      ]),
       answer(['no agent is connected to this host'], 503),
       answer(['cross-site request refused'], 403),
       answer(['{"status":"watching"}\n']),
