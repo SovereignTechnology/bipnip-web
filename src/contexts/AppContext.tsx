@@ -40,10 +40,12 @@ export const closeAll: OpenDialogs = {
   thirdParty: '',
 };
 
-export type Page = 'garage' | 'order' | 'create' | 'offers' | 'settings' | 'none';
+export type Page = 'garage' | 'order' | 'create' | 'offers' | 'settings' | 'liquidity' | 'none';
 
 export function isPage(page: string): page is Page {
-  return ['garage', 'order', 'create', 'offers', 'settings', 'none'].includes(page.split('/')[0]);
+  return ['garage', 'order', 'create', 'offers', 'settings', 'liquidity', 'none'].includes(
+    page.split('/')[0],
+  );
 }
 
 const pageFromPath = window.location.pathname.split('/')[1];

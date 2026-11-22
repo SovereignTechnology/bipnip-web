@@ -10,6 +10,7 @@ import {
   AddBox,
   Assignment,
   MoreHoriz,
+  Bolt,
 } from '@mui/icons-material';
 import RobotAvatar from '../../../components/RobotAvatar';
 import {
@@ -100,6 +101,13 @@ const DesktopBar = ({ changePage }: DesktopBarProps): React.JSX.Element => {
           value='create'
           disabled={isLegacyMode}
           icon={<AddBox />}
+          iconPosition='start'
+        />
+        <Tab
+          sx={tabSx}
+          label={t('Liquidity')}
+          value='liquidity'
+          icon={<Bolt />}
           iconPosition='start'
         />
         <Tab
