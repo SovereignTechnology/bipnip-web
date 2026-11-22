@@ -7,12 +7,18 @@ import HostAlert from './components/HostAlert';
 
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n/Web';
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
+import { pageNonce } from './utils/nonce';
 
 import { systemClient } from './services/System';
 import ErrorBoundary from './components/ErrorBoundary';
 import { AppContextProvider } from './contexts/AppContext';
 import { GarageContextProvider } from './contexts/GarageContext';
 import { FederationContextProvider } from './contexts/FederationContext';
+
+// bipnip: the styles emotion adds carry the page's nonce, the only inline styles its host allows.
+const emotionCache = createCache({ key: 'css', nonce: pageNonce, prepend: true });
 
 const App = (): React.JSX.Element => {
   const [client, view] = window.RobosatsSettings.split('-');
@@ -50,37 +56,39 @@ const App = (): React.JSX.Element => {
   };
 
   return (
-    <ErrorBoundary>
-      <Suspense fallback='loading'>
-        <I18nextProvider i18n={i18n}>
-          <AppContextProvider>
-            <FederationContextProvider>
-              <GarageContextProvider>
-                <CssBaseline />
-                {client !== 'mobile' && <HostAlert />}
-                {isPro ? <ProMain /> : <BasicMain />}
+    <CacheProvider value={emotionCache}>
+      <ErrorBoundary>
+        <Suspense fallback='loading'>
+          <I18nextProvider i18n={i18n}>
+            <AppContextProvider>
+              <FederationContextProvider>
+                <GarageContextProvider>
+                  <CssBaseline />
+                  {client !== 'mobile' && <HostAlert />}
+                  {isPro ? <ProMain /> : <BasicMain />}
 
-                <Snackbar
-                  open={errorOpen}
-                  autoHideDuration={6000}
-                  onClose={handleSnackbarClose}
-                  anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                >
-                  <Alert
-                    onClose={handleAlertClose}
-                    severity='error'
-                    sx={{ width: '100%' }}
-                    variant='filled'
+                  <Snackbar
+                    open={errorOpen}
+                    autoHideDuration={6000}
+                    onClose={handleSnackbarClose}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                   >
-                    {errorMessage}
-                  </Alert>
-                </Snackbar>
-              </GarageContextProvider>
-            </FederationContextProvider>
-          </AppContextProvider>
-        </I18nextProvider>
-      </Suspense>
-    </ErrorBoundary>
+                    <Alert
+                      onClose={handleAlertClose}
+                      severity='error'
+                      sx={{ width: '100%' }}
+                      variant='filled'
+                    >
+                      {errorMessage}
+                    </Alert>
+                  </Snackbar>
+                </GarageContextProvider>
+              </FederationContextProvider>
+            </AppContextProvider>
+          </I18nextProvider>
+        </Suspense>
+      </ErrorBoundary>
+    </CacheProvider>
   );
 };
 
