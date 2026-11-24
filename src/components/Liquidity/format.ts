@@ -51,7 +51,10 @@ export function record(value: NodeRecord | undefined): string {
   if (value.subjects === 0) {
     return 'new';
   }
-  const parts = [`${value.kept} kept`, `${value.counterparties} peers`];
+  const parts = [
+    `${value.kept} kept`,
+    `${value.counterparties} ${value.counterparties === 1 ? 'peer' : 'peers'}`,
+  ];
   if (value.opened > 0) parts.push(`${value.opened} opened`);
   if (value.closed_early > 0) parts.push(`${value.closed_early} closed early`);
   if (value.missing > 0) parts.push(`${value.missing} missing`);

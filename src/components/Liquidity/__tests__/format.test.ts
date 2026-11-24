@@ -54,6 +54,7 @@ describe('Liquidity numbers', () => {
     expect(record({ ...empty, kept: 3, counterparties: 2, closed_early: 1, subjects: 4 })).toBe(
       '3 kept, 2 peers, 1 closed early',
     );
+    expect(record({ ...empty, kept: 1, counterparties: 1, subjects: 1 })).toBe('1 kept, 1 peer');
   });
 
   it('reads only whole numbers from a field', () => {
