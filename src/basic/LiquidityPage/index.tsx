@@ -57,7 +57,11 @@ const LiquidityPage = (): React.JSX.Element => {
                 />
                 <Chip
                   size='small'
-                  label={t('{{count}} instances', { count: status.instances.length })}
+                  label={
+                    status.instances.length === 1
+                      ? t('1 instance')
+                      : t('{{count}} instances', { count: status.instances.length })
+                  }
                 />
               </>
             )}
